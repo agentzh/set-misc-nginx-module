@@ -80,6 +80,14 @@ static ndk_set_var_t  ngx_http_set_misc_set_hmac_sha1_filter = {
     2,
     NULL
 };
+
+static ndk_set_var_t  ngx_http_set_misc_set_hmac_filter = {
+    NDK_SET_VAR_MULTI_VALUE,
+    (void *) ngx_http_set_misc_set_hmac,
+    3,
+    NULL
+};
+
 #endif
 
 
@@ -248,6 +256,14 @@ static ngx_command_t  ngx_http_set_misc_commands[] = {
         0,
         0,
         &ngx_http_set_misc_set_hmac_sha1_filter
+    },
+    {   ngx_string ("set_hmac"),
+        NGX_HTTP_MAIN_CONF|NGX_HTTP_SRV_CONF|NGX_HTTP_SIF_CONF
+            |NGX_HTTP_LOC_CONF|NGX_HTTP_LIF_CONF|NGX_CONF_TAKE4,
+        ndk_set_var_multi_value,
+        0,
+        0,
+        &ngx_http_set_misc_set_hmac_filter
     },
 #endif
 #ifndef NGX_HTTP_SET_HASH
